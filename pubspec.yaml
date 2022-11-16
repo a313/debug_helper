@@ -1,0 +1,27 @@
+name: debug_helper
+description: A new Flutter plugin project.
+version: 0.0.1
+homepage: null
+
+environment:
+  sdk: '>=2.18.4 <3.0.0'
+  flutter: ">=2.5.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  intl: ^0.17.0
+  plugin_platform_interface: ^2.0.2
+  sensors_plus: ^2.0.1
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  plugin:
+    platforms:
+      some_platform:
+        pluginClass: somePluginClass
