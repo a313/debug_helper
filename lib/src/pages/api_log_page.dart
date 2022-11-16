@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:debug_helper/debug_helper.dart';
+import 'package:debug_helper/src/debug_helper.dart';
 import 'package:debug_helper/src/extentions.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +28,7 @@ class _ApiLogSceneState extends State<ApiLogScene> {
       appBar: AppBar(
         title: const Text(
           "Api Log",
+          style: TextStyle(color: Colors.black),
         ),
       ),
       floatingActionButton: FloatingActionButton(

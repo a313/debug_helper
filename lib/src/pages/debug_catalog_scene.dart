@@ -1,9 +1,9 @@
 import 'package:debug_helper/src/extentions.dart';
 import 'package:flutter/material.dart';
 
-import 'src/pages/api_log_page.dart';
-import 'src/pages/event_page.dart';
-import 'src/pages/exception_page.dart';
+import 'api_log_page.dart';
+import 'event_page.dart';
+import 'exception_page.dart';
 
 class DebugCatalogPage extends StatelessWidget {
   const DebugCatalogPage({super.key});
@@ -14,6 +14,7 @@ class DebugCatalogPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Category',
+          style: TextStyle(color: Colors.black),
         ),
       ),
       body: ListView(
