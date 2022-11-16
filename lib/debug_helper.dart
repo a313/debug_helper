@@ -1,4 +1,5 @@
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' hide log;
 
 import 'package:debug_helper/src/catalog_scene.dart';
 import 'package:debug_helper/src/model/event_data.dart';
@@ -44,7 +45,7 @@ class DebugHelper {
     if (_instance?.shouldLog ?? false) _instance?.events.add(data);
   }
 
-  static void start(BuildContext context) {
+  static void start(GlobalKey<NavigatorState>? navigatorKey) {
     int mShakeTimestamp = DateTime.now().millisecondsSinceEpoch;
     int mShakeCount = 0;
     accelerometerEvents.listen((event) {
@@ -74,18 +75,23 @@ class DebugHelper {
         mShakeCount++;
 
         if (mShakeCount >= 2) {
-          _onPhoneShake(context);
+          _onPhoneShake(navigatorKey);
         }
       }
     });
   }
 
-  static void _onPhoneShake(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) => const DebugCatalogPage(),
-      ),
-    );
+  static void _onPhoneShake(GlobalKey<NavigatorState>? navigatorKey) {
+    if (navigatorKey == null) {
+      navigatorKey?.currentState?.push(
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => const DebugCatalogPage(),
+        ),
+      );
+    } else {
+      log('Cant navigate, please check your navigatorKey',
+          name: "DEBUG HELPER");
+    }
   }
 
   static void clearApi() {
