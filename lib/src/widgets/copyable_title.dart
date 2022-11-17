@@ -18,7 +18,7 @@ class CopyableTitle extends StatelessWidget {
     return GestureDetector(
       onLongPress: () {
         Clipboard.setData(ClipboardData(text: title));
-        showToast(context, msg: 'Copy success');
+        showToast(context, msg: 'Copied');
       },
       child: Text(
         title,
@@ -29,10 +29,7 @@ class CopyableTitle extends StatelessWidget {
   }
 
   void showToast(BuildContext context, {required String msg}) {
-    const snackBar = SnackBar(
-      content: Text('Yay! A SnackBar!'),
-    );
-
+    final snackBar = SnackBar(content: Text(msg));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

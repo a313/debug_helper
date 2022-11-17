@@ -4,6 +4,7 @@ import 'package:debug_helper/src/widgets/copyable_title.dart';
 import 'package:flutter/material.dart';
 
 import '../model/event_data.dart';
+import '../widgets/base_scaffold.dart';
 
 class EventTrackingScene extends StatefulWidget {
   const EventTrackingScene({Key? key}) : super(key: key);
@@ -22,13 +23,8 @@ class _EventTrackingSceneState extends State<EventTrackingScene> {
   Widget build(BuildContext context) {
     final data = DebugHelper.getInstance().events.reversed;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Event Log",
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+    return BaseScaffold(
+      title: "Event Log",
       floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.clear_all),
           onPressed: () {
@@ -65,12 +61,8 @@ class _DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Detail",
-        ),
-      ),
+    return BaseScaffold(
+      title: "Detail",
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

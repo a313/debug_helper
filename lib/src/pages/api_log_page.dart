@@ -130,8 +130,7 @@ class _DetailPage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text(
-                'Request Time: ${data.requestDate.toStringFormat('HH:mm:ss')})'),
+            Text('Request At: ${data.requestDate.toStringFormat('HH:mm:ss')}'),
             CopyableTitle(title: "${data.method} : ${data.url}"),
             const Divider(),
             CopyableTitle(

@@ -3,6 +3,7 @@ import 'package:debug_helper/src/extentions.dart';
 import 'package:flutter/material.dart';
 
 import '../model/exception_data.dart';
+import '../widgets/base_scaffold.dart';
 import '../widgets/copyable_title.dart';
 
 class ExceptionScene extends StatefulWidget {
@@ -22,13 +23,8 @@ class _ExceptionSceneState extends State<ExceptionScene> {
   Widget build(BuildContext context) {
     final data = DebugHelper.getInstance().exceptions.reversed;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Exception Log",
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+    return BaseScaffold(
+      title: "Exception Log",
       floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.clear_all),
           onPressed: () {
@@ -62,12 +58,8 @@ class _DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Stack Trace",
-        ),
-      ),
+    return BaseScaffold(
+      title: "Stack Trace",
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
