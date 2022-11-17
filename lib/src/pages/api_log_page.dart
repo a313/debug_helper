@@ -5,6 +5,7 @@ import 'package:debug_helper/src/extentions.dart';
 import 'package:flutter/material.dart';
 
 import '../model/api_data.dart';
+import '../widgets/base_scaffold.dart';
 import '../widgets/copyable_title.dart';
 
 class ApiLogScene extends StatefulWidget {
@@ -24,15 +25,15 @@ class _ApiLogSceneState extends State<ApiLogScene> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Api Log",
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+    return BaseScaffold(
+      title: "Api Log",
       floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.clear_all), onPressed: () {}),
+          child: const Icon(Icons.clear_all),
+          onPressed: () {
+            setState(() {
+              DebugHelper.clearApi();
+            });
+          }),
       body: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -42,16 +43,12 @@ class _ApiLogSceneState extends State<ApiLogScene> {
             child: SizedBox(
                 height: 50.0,
                 child: TabBar(
-                    labelColor: Color(0xFF333333),
-                    unselectedLabelColor: Color(0xFF858585),
-                    indicatorColor: Color(0xFF00B14F),
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.grey,
+                    indicatorColor: Colors.blue,
                     tabs: [
-                      Tab(
-                        text: "Succesfull",
-                      ),
-                      Tab(
-                        text: "Failed",
-                      )
+                      Tab(text: "Succesfull"),
+                      Tab(text: "Failed"),
                     ])),
           ),
           body: TabBarView(children: [
@@ -82,7 +79,7 @@ class _ExceptionPage extends StatelessWidget {
               title: data.elementAt(index).url,
             ),
             subtitle: Text(
-              data.elementAt(index).requestDate.toUtc().toString(),
+              'Request At: ${data.elementAt(index).requestDate.toStringFormat('HH:mm:ss')}\nResponse Time: ${data.elementAt(index).responseTime}ms',
             ),
             onTap: () => context.to(_DetailPage(data: data.elementAt(index)))),
         separatorBuilder: (context, index) => const Divider(),
@@ -102,8 +99,7 @@ class _SuccessPage extends StatelessWidget {
         itemBuilder: (context, index) => ListTile(
               title: CopyableTitle(title: data.elementAt(index).url),
               subtitle: Text(
-                data.elementAt(index).requestDate.toUtc().toString(),
-              ),
+                  'Request At: ${data.elementAt(index).requestDate.toStringFormat('HH:mm:ss')}\nResponse Time: ${data.elementAt(index).responseTime}ms'),
               onTap: () => context.to(_DetailPage(data: data.elementAt(index))),
             ),
         separatorBuilder: (context, index) => const Divider(),
@@ -120,41 +116,41 @@ class _DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Detail",
-        ),
-      ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            Text('Request At: ${data.requestDate.toStringFormat('HH:mm:ss')}'),
-            CopyableTitle(title: "${data.method} : ${data.url}"),
-            const Divider(),
-            CopyableTitle(
-              title: "Header:\n${data.header}",
-              maxLine: 6,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const Divider(),
-            CopyableTitle(title: "Params:\n${data.params}"),
-            const Divider(),
-            Visibility(
-              visible: data.response != null,
-              child: _Response(
-                response: data.response,
+    return DefaultTextStyle(
+      style: const TextStyle(fontSize: 12),
+      child: BaseScaffold(
+        title: "Detail",
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              Text(
+                  'Request At: ${data.requestDate.toStringFormat('HH:mm:ss')}'),
+              CopyableTitle(title: "${data.method} : ${data.url}"),
+              const Divider(),
+              CopyableTitle(
+                title: "Header:\n${data.header}",
+                maxLine: 4,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            Visibility(
-              visible: data.exception != null,
-              child: _Exception(
-                exception: data.exception,
-                bodyString: data.bodyString,
+              const Divider(),
+              CopyableTitle(title: "Params:\n${data.params}"),
+              const Divider(),
+              Visibility(
+                visible: data.response != null,
+                child: _Response(
+                  response: data.response,
+                ),
               ),
-            ),
-          ],
+              Visibility(
+                visible: data.exception != null,
+                child: _Exception(
+                  exception: data.exception,
+                  bodyString: data.bodyString,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -168,16 +164,13 @@ class _Response extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const JsonDecoder decoder = JsonDecoder();
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    final object = decoder.convert(response as String);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text("Response:"),
         CopyableTitle(
-          title: encoder.convert(object),
+          title: encoder.convert(response),
           maxLine: null,
         ),
       ],

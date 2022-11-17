@@ -14,15 +14,18 @@ class BaseScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            title,
-            style: const TextStyle(color: Colors.black),
+      child: DefaultTextStyle(
+        style: const TextStyle(fontSize: 12),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              title,
+              style: const TextStyle(color: Colors.black, fontSize: 16),
+            ),
           ),
+          body: body,
+          floatingActionButton: floatingActionButton,
         ),
-        body: body,
-        floatingActionButton: floatingActionButton,
       ),
     );
   }
