@@ -81,45 +81,6 @@ class _ExceptionPage extends StatelessWidget {
   }
 }
 
-class _Cell extends StatelessWidget {
-  const _Cell({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-
-  final ApiData data;
-
-  @override
-  Widget build(BuildContext context) {
-    final responseTime = data.responseTime ?? -1;
-
-    var color = Colors.grey;
-    if (responseTime > 500) {
-      color = Colors.amber;
-    } else if (responseTime > 1000) {
-      color = Colors.red;
-    }
-    return ListTile(
-        title: CopyableTitle(
-          title: data.url,
-        ),
-        subtitle: Text.rich(
-          TextSpan(
-              text:
-                  'Request At: ${data.requestDate.toStringFormat('HH:mm:ss')}',
-              children: responseTime >= 0
-                  ? [
-                      const TextSpan(text: '\nResponse Time: '),
-                      TextSpan(
-                          text: "$responseTime" "ms",
-                          style: TextStyle(color: color))
-                    ]
-                  : null),
-        ),
-        onTap: () => context.to(_DetailPage(data: data)));
-  }
-}
-
 class _SuccessPage extends StatelessWidget {
   const _SuccessPage({
     Key? key,
@@ -129,12 +90,7 @@ class _SuccessPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final data = DebugHelper.getInstance().apiSuccess.reversed;
     return ListView.separated(
-        itemBuilder: (context, index) => ListTile(
-              title: CopyableTitle(title: data.elementAt(index).url),
-              subtitle: Text(
-                  'Request At: ${data.elementAt(index).requestDate.toStringFormat('HH:mm:ss')}\nResponse Time: ${data.elementAt(index).responseTime}ms'),
-              onTap: () => context.to(_DetailPage(data: data.elementAt(index))),
-            ),
+        itemBuilder: (context, index) => _Cell(data: data.elementAt(index)),
         separatorBuilder: (context, index) => const Divider(),
         itemCount: data.length);
   }
@@ -238,5 +194,44 @@ class _Exception extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _Cell extends StatelessWidget {
+  const _Cell({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+
+  final ApiData data;
+
+  @override
+  Widget build(BuildContext context) {
+    final responseTime = data.responseTime ?? -1;
+
+    var color = Colors.grey;
+    if (responseTime > 500) {
+      color = Colors.amber;
+    } else if (responseTime > 1000) {
+      color = Colors.red;
+    }
+    return ListTile(
+        title: CopyableTitle(
+          title: data.url,
+        ),
+        subtitle: Text.rich(
+          TextSpan(
+              text:
+                  'Request At: ${data.requestDate.toStringFormat('HH:mm:ss')}',
+              children: responseTime >= 0
+                  ? [
+                      const TextSpan(text: '\nResponse Time: '),
+                      TextSpan(
+                          text: "$responseTime" "ms",
+                          style: TextStyle(color: color))
+                    ]
+                  : null),
+        ),
+        onTap: () => context.to(_DetailPage(data: data)));
   }
 }
