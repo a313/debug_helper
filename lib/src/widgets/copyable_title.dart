@@ -5,7 +5,7 @@ class CopyableTitle extends StatelessWidget {
   const CopyableTitle({
     Key? key,
     required this.title,
-    this.maxLine = 2,
+    this.maxLine = 4,
     this.overflow,
   }) : super(key: key);
 
