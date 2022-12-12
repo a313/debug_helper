@@ -209,13 +209,13 @@ class _Cell extends StatelessWidget {
   Widget build(BuildContext context) {
     final responseTime = data.responseTime ?? -1;
 
-    var color = Colors.green;
-
-    if (responseTime >= 500) {
-      color = Colors.amber;
-    } else if (responseTime >= 1000) {
+    Color color = Colors.green;
+    if (responseTime >= 1000) {
       color = Colors.red;
+    } else if (responseTime >= 500) {
+      color = Colors.yellow;
     }
+
     return ListTile(
         title: CopyableTitle(
           title: data.url,
