@@ -6,7 +6,7 @@ class CopyableContent extends StatelessWidget {
     Key? key,
     required this.content,
     this.maxLine,
-    this.overflow = TextOverflow.ellipsis,
+    this.overflow,
   }) : super(key: key);
 
   final String content;
