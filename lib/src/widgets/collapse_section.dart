@@ -2,21 +2,26 @@ import 'package:debug_helper/src/widgets/copyable_title.dart';
 import 'package:flutter/material.dart';
 
 class CollapseSection extends StatefulWidget {
-  const CollapseSection(
-      {super.key, required this.title, required this.content});
+  const CollapseSection({
+    super.key,
+    required this.title,
+    required this.content,
+    this.defaultCollapse = true,
+  });
   final String title;
   final String content;
+  final bool defaultCollapse;
 
   @override
   State<CollapseSection> createState() => _CollapseSectionState();
 }
 
 class _CollapseSectionState extends State<CollapseSection> {
-  late bool isExpanded;
+  late bool isCollapse;
 
   @override
   void initState() {
-    isExpanded = false;
+    isCollapse = widget.defaultCollapse;
     super.initState();
   }
 
@@ -32,14 +37,14 @@ class _CollapseSectionState extends State<CollapseSection> {
             ),
             IconButton(
                 onPressed: onToggle,
-                icon: isExpanded
-                    ? const Icon(Icons.arrow_circle_up_sharp)
-                    : const Icon(Icons.arrow_circle_down_sharp))
+                icon: isCollapse
+                    ? const Icon(Icons.arrow_circle_down_sharp)
+                    : const Icon(Icons.arrow_circle_up_sharp))
           ],
         ),
         CopyableContent(
           content: widget.content,
-          maxLine: isExpanded ? null : 4,
+          maxLine: isCollapse ? 4 : null,
         ),
       ],
     );
@@ -47,7 +52,7 @@ class _CollapseSectionState extends State<CollapseSection> {
 
   void onToggle() {
     setState(() {
-      isExpanded = !isExpanded;
+      isCollapse = !isCollapse;
     });
   }
 }

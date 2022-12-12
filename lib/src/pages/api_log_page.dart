@@ -127,6 +127,7 @@ class _DetailPage extends StatelessWidget {
                 visible: data.response != null,
                 child: CollapseSection(
                   title: 'Response',
+                  defaultCollapse: false,
                   content: formatListOrMap(data.response),
                 ),
               ),
@@ -160,6 +161,7 @@ class _Exception extends StatelessWidget {
         CollapseSection(
           title: 'Exception',
           content: exception ?? "null",
+          defaultCollapse: false,
         ),
         CollapseSection(
           title: 'Body',
