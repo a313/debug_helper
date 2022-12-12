@@ -37,11 +37,8 @@ class _EventTrackingSceneState extends State<EventTrackingScene> {
             final d = data.elementAt(index);
             return ListTile(
               dense: true,
-              title: CopyableTitle(
-                title: d.name,
-              ),
-              subtitle: const Text(
-                'd.',
+              title: CopyableContent(
+                content: d.name,
               ),
               onTap: () => context.to(_DetailPage(data: d)),
             );
@@ -66,9 +63,8 @@ class _DetailPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: CopyableTitle(
-            title: data.params.toString(),
-            maxLine: null,
+          child: CopyableContent(
+            content: formatListOrMap(data.params),
           ),
         ),
       ),

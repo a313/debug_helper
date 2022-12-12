@@ -37,8 +37,8 @@ class _ExceptionSceneState extends State<ExceptionScene> {
             final d = data.elementAt(index);
             return ListTile(
               dense: true,
-              title: CopyableTitle(
-                title: d.error.toString(),
+              title: CopyableContent(
+                content: d.error.toString(),
               ),
               onTap: () => context.to(_DetailPage(data: d)),
             );
@@ -63,9 +63,8 @@ class _DetailPage extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
-          child: CopyableTitle(
-            title: data.stack.toString(),
-            maxLine: null,
+          child: CopyableContent(
+            content: data.stack.toString(),
           ),
         ),
       ),

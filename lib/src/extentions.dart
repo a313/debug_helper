@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -13,4 +15,9 @@ extension DateExtension on DateTime {
   String toStringFormat(String format) {
     return DateFormat(format).format(toLocal());
   }
+}
+
+String formatListOrMap(dynamic data) {
+  const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+  return encoder.convert(data);
 }

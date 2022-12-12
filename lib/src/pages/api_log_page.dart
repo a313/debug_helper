@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:debug_helper/src/debug_helper.dart';
 import 'package:debug_helper/src/extentions.dart';
+import 'package:debug_helper/src/widgets/collapse_section.dart';
 import 'package:flutter/material.dart';
 
 import '../model/api_data.dart';
@@ -115,23 +114,20 @@ class _DetailPage extends StatelessWidget {
             children: [
               Text(
                   'Request At: ${data.requestDate.toStringFormat('HH:mm:ss')}'),
-              CopyableTitle(title: "${data.method} : ${data.url}"),
+              CopyableContent(content: "${data.method} : ${data.url}"),
               const Divider(),
-              CopyableTitle(
-                title: "Header:\n${data.header}",
-                maxLine: 4,
-                overflow: TextOverflow.ellipsis,
+              CollapseSection(
+                title: 'Header',
+                content: formatListOrMap(data.header),
               ),
               const Divider(),
-              CopyableTitle(
-                title: "Params:\n${data.params}",
-                maxLine: 4,
-              ),
+              CopyableContent(content: "Params\n${data.params}"),
               const Divider(),
               Visibility(
                 visible: data.response != null,
-                child: _Response(
-                  response: data.response,
+                child: CollapseSection(
+                  title: 'Response',
+                  content: formatListOrMap(data.response),
                 ),
               ),
               Visibility(
@@ -149,27 +145,6 @@ class _DetailPage extends StatelessWidget {
   }
 }
 
-class _Response extends StatelessWidget {
-  final dynamic response;
-
-  const _Response({Key? key, this.response}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Response:"),
-        CopyableTitle(
-          title: encoder.convert(response),
-          maxLine: null,
-        ),
-      ],
-    );
-  }
-}
-
 class _Exception extends StatelessWidget {
   final String? exception;
   final String? bodyString;
@@ -182,16 +157,14 @@ class _Exception extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Exception:"),
-        CopyableTitle(
-          title: exception ?? "null",
-          maxLine: null,
+        CollapseSection(
+          title: 'Exception',
+          content: exception ?? "null",
         ),
-        const Text("body:"),
-        CopyableTitle(
-          title: bodyString ?? "null",
-          maxLine: null,
-        ),
+        CollapseSection(
+          title: 'Body',
+          content: bodyString ?? "null",
+        )
       ],
     );
   }
@@ -213,12 +186,12 @@ class _Cell extends StatelessWidget {
     if (responseTime >= 1000) {
       color = Colors.red;
     } else if (responseTime >= 500) {
-      color = Colors.yellow;
+      color = const Color(0xFFF9A825);
     }
 
     return ListTile(
-        title: CopyableTitle(
-          title: data.url,
+        title: CopyableContent(
+          content: data.url,
         ),
         subtitle: Text.rich(
           TextSpan(

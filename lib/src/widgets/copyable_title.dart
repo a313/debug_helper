@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CopyableTitle extends StatelessWidget {
-  const CopyableTitle({
+class CopyableContent extends StatelessWidget {
+  const CopyableContent({
     Key? key,
-    required this.title,
-    this.maxLine = 4,
+    required this.content,
+    this.maxLine,
     this.overflow,
   }) : super(key: key);
 
-  final String title;
+  final String content;
   final int? maxLine;
   final TextOverflow? overflow;
 
@@ -17,11 +17,11 @@ class CopyableTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
-        Clipboard.setData(ClipboardData(text: title));
+        Clipboard.setData(ClipboardData(text: content));
         showToast(context, msg: 'Copied');
       },
       child: Text(
-        title,
+        content,
         maxLines: maxLine,
         overflow: overflow,
       ),
