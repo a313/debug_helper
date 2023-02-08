@@ -1,4 +1,5 @@
 import 'package:debug_helper/src/extentions.dart';
+import 'package:debug_helper/src/pages/fcm_log_page.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/base_scaffold.dart';
@@ -28,6 +29,11 @@ class DebugCatalogPage extends StatelessWidget {
           ListTile(
             title: const Text('App Exception'),
             onTap: () => context.to(const ExceptionScene()),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('Fcm Log'),
+            onTap: () => context.to(const FcmPage()),
           ),
         ],
       ),

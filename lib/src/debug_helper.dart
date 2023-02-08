@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:debug_helper/src/model/event_data.dart';
 import 'package:debug_helper/src/model/exception_data.dart';
+import 'package:debug_helper/src/model/fcm_data.dart';
 
 import 'model/api_data.dart';
 
@@ -10,6 +13,7 @@ class DebugHelper {
   List<ApiData> apiFailed = [];
   List<ExceptionData> exceptions = [];
   List<EventData> events = [];
+  List<FCMData> notis = [];
 
   DebugHelper._(this.shouldLog);
 
@@ -39,6 +43,14 @@ class DebugHelper {
     if (_instance?.shouldLog ?? false) _instance?.events.add(data);
   }
 
+  static addRemoteMessage(FCMData data) {
+    try {
+      if (_instance?.shouldLog ?? false) _instance?.notis.add(data);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   static void clearApi() {
     _instance?.apiSuccess.clear();
     _instance?.apiFailed.clear();
@@ -52,10 +64,15 @@ class DebugHelper {
     _instance?.exceptions.clear();
   }
 
+  static void clearNotis() {
+    _instance?.notis.clear();
+  }
+
   static clear() {
     _instance?.apiSuccess.clear();
     _instance?.apiFailed.clear();
     _instance?.exceptions.clear();
     _instance?.events.clear();
+    _instance?.notis.clear();
   }
 }
