@@ -35,10 +35,11 @@ class _ExceptionSceneState extends State<ExceptionScene> {
       body: ListView.separated(
           itemBuilder: (context, index) {
             final d = data.elementAt(index);
+            final error = d.flutterError?.exception ?? d.error;
             return ListTile(
               dense: true,
               title: CopyableContent(
-                content: d.error.toString(),
+                content: error.toString(),
               ),
               onTap: () => context.to(_DetailPage(data: d)),
             );

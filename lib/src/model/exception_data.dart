@@ -1,6 +1,12 @@
-class ExceptionData {
-  final Object error;
-  final StackTrace stack;
+import 'package:flutter/foundation.dart';
 
-  ExceptionData(this.error, this.stack);
+class ExceptionData {
+  final FlutterErrorDetails? flutterError;
+  final Object? error;
+  final StackTrace? stack;
+  ExceptionData({
+    this.flutterError,
+    this.error,
+    this.stack,
+  });
 }

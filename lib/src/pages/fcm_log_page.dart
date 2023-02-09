@@ -65,7 +65,7 @@ class _DetailPage extends StatelessWidget {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: CopyableContent(
-            content: data.map.toString(),
+            content: formatListOrMap(data.map),
           ),
         ),
       ),
