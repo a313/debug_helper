@@ -121,7 +121,12 @@ class _DetailPage extends StatelessWidget {
                 content: formatListOrMap(data.header),
               ),
               const Divider(),
-              CopyableContent(content: "Params\n${data.params}"),
+              // CopyableContent(content: "Params\n${data.params}"),
+              CollapseSection(
+                title: 'Params',
+                defaultCollapse: false,
+                content: formatListOrMap(data.params),
+              ),
               const Divider(),
               Visibility(
                 visible: data.response != null,

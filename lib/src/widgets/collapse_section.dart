@@ -28,6 +28,7 @@ class _CollapseSectionState extends State<CollapseSection> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
