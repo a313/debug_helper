@@ -14,6 +14,7 @@ class EventTrackingScene extends StatefulWidget {
 }
 
 class _EventTrackingSceneState extends State<EventTrackingScene> {
+  String subKey = '';
   @override
   void initState() {
     super.initState();
@@ -32,19 +33,37 @@ class _EventTrackingSceneState extends State<EventTrackingScene> {
               DebugHelper.clearEvent();
             });
           }),
-      body: ListView.separated(
-          itemBuilder: (context, index) {
-            final d = data.elementAt(index);
-            return ListTile(
-              dense: true,
-              title: CopyableContent(
-                content: d.name,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: const InputDecoration(
+                hintText: 'Enter param key to show on subtitle',
               ),
-              onTap: () => context.to(_DetailPage(data: d)),
-            );
-          },
-          separatorBuilder: (context, index) => const Divider(),
-          itemCount: data.length),
+              onChanged: (value) => setState(() {
+                subKey = value;
+              }),
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+                itemBuilder: (context, index) {
+                  final d = data.elementAt(index);
+                  return ListTile(
+                    dense: true,
+                    title: CopyableContent(
+                      content: d.name,
+                    ),
+                    subtitle: Text(d.params[subKey].toString()),
+                    onTap: () => context.to(_DetailPage(data: d)),
+                  );
+                },
+                separatorBuilder: (context, index) => const Divider(),
+                itemCount: data.length),
+          ),
+        ],
+      ),
     );
   }
 }
