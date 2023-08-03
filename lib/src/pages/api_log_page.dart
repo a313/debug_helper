@@ -51,12 +51,8 @@ class _ApiLogSceneState extends State<ApiLogScene> {
                     ])),
           ),
           body: TabBarView(children: [
-            _SuccessPage(
-              key: UniqueKey(),
-            ),
-            _ExceptionPage(
-              key: UniqueKey(),
-            ),
+            _SuccessPage(key: UniqueKey()),
+            _ExceptionPage(key: UniqueKey()),
           ]),
         ),
       ),
@@ -134,6 +130,14 @@ class _DetailPage extends StatelessWidget {
                   title: 'Response',
                   defaultCollapse: false,
                   content: formatListOrMap(data.response),
+                ),
+              ),
+              Visibility(
+                visible: data.extraData != null,
+                child: CollapseSection(
+                  title: 'Extra',
+                  defaultCollapse: false,
+                  content: data.extraData.toString(),
                 ),
               ),
               Visibility(

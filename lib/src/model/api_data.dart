@@ -7,6 +7,7 @@ class ApiData {
   final String? exception;
   final String? bodyString;
   final int? responseTime;
+  final dynamic extraData;
 
   final DateTime requestDate;
   ApiData({
@@ -19,5 +20,6 @@ class ApiData {
     this.exception,
     this.bodyString,
     this.responseTime,
+    this.extraData,
   });
 }
