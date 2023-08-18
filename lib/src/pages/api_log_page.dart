@@ -37,8 +37,8 @@ class _ApiLogSceneState extends State<ApiLogScene> {
         length: 2,
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(kToolbarHeight),
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
             child: SizedBox(
                 height: 50.0,
                 child: TabBar(
@@ -46,8 +46,12 @@ class _ApiLogSceneState extends State<ApiLogScene> {
                     unselectedLabelColor: Colors.grey,
                     indicatorColor: Colors.blue,
                     tabs: [
-                      Tab(text: "Succesfull"),
-                      Tab(text: "Failed"),
+                      Tab(
+                          text:
+                              "Succesfull (${DebugHelper.getInstance().apiSuccess.length})"),
+                      Tab(
+                          text:
+                              "Failed (${DebugHelper.getInstance().apiFailed.length})"),
                     ])),
           ),
           body: TabBarView(children: [

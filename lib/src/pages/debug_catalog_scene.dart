@@ -2,6 +2,7 @@ import 'package:debug_helper/src/extentions.dart';
 import 'package:debug_helper/src/pages/fcm_log_page.dart';
 import 'package:flutter/material.dart';
 
+import '../debug_helper.dart';
 import '../widgets/base_scaffold.dart';
 import 'api_log_page.dart';
 import 'event_page.dart';
@@ -16,27 +17,70 @@ class DebugCatalogPage extends StatelessWidget {
       title: 'Category',
       body: ListView(
         children: [
-          ListTile(
-            title: const Text('Api Log'),
+          _Item(
+            title: 'Api Log',
             onTap: () => context.to(const ApiLogScene()),
           ),
           const Divider(),
-          ListTile(
-            title: const Text('Event Tracking'),
+          _Item(
+            title: 'Event Tracking',
             onTap: () => context.to(const EventTrackingScene()),
           ),
           const Divider(),
-          ListTile(
-            title: const Text('App Exception'),
+          _Item(
+            title: 'App Exception',
+            badge: getExcBadge(),
             onTap: () => context.to(const ExceptionScene()),
           ),
           const Divider(),
-          ListTile(
-            title: const Text('Fcm Log'),
+          _Item(
+            title: 'Fcm Log',
+            badge: getFcmBadge(),
             onTap: () => context.to(const FcmPage()),
           ),
         ],
       ),
+    );
+  }
+
+  String? getExcBadge() {
+    final length = DebugHelper.getInstance().exceptions.length;
+    return length > 0 ? length.toString() : null;
+  }
+
+  String? getFcmBadge() {
+    final length = DebugHelper.getInstance().notis.length;
+    return length > 0 ? length.toString() : null;
+  }
+}
+
+class _Item extends StatelessWidget {
+  const _Item({required this.title, required this.onTap, this.badge});
+
+  final String title;
+  final String? badge;
+  final Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(title),
+      trailing: badge != null
+          ? Container(
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.redAccent),
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                badge ?? '',
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            )
+          : null,
+      onTap: onTap,
     );
   }
 }
