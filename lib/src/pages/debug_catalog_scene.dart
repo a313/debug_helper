@@ -1,5 +1,6 @@
 import 'package:debug_helper/src/extentions.dart';
 import 'package:debug_helper/src/pages/fcm_log_page.dart';
+import 'package:debug_helper/src/pages/http_code_explain.dart';
 import 'package:flutter/material.dart';
 
 import '../debug_helper.dart';
@@ -37,6 +38,11 @@ class DebugCatalogPage extends StatelessWidget {
             title: 'Fcm Log',
             badge: getFcmBadge(),
             onTap: () => context.to(const FcmPage()),
+          ),
+          const Divider(),
+          _Item(
+            title: 'Http Status Code Explain',
+            onTap: () => context.to(const HttpCodeExplain()),
           ),
         ],
       ),

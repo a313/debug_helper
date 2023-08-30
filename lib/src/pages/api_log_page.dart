@@ -113,7 +113,7 @@ class _DetailPage extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             children: [
               Text(
-                  'Request At: ${data.requestDate.toStringFormat('HH:mm:ss')}'),
+                  'Request At: ${data.requestDate.toStringFormat('HH:mm:ss')} - Status Code: ${data.statusCode}'),
               CopyableContent(content: "${data.method} : ${data.url}"),
               const Divider(),
               CollapseSection(
@@ -131,7 +131,7 @@ class _DetailPage extends StatelessWidget {
               Visibility(
                 visible: data.response != null,
                 child: CollapseSection(
-                  title: 'Response',
+                  title: 'Response ()',
                   defaultCollapse: false,
                   content: formatListOrMap(data.response),
                 ),
@@ -211,7 +211,7 @@ class _Cell extends StatelessWidget {
         subtitle: Text.rich(
           TextSpan(
               text:
-                  'Request At: ${data.requestDate.toStringFormat('HH:mm:ss')}',
+                  'Request At: ${data.requestDate.toStringFormat('HH:mm:ss')} - Status Code: ${data.statusCode}',
               children: responseTime >= 0
                   ? [
                       const TextSpan(text: '\nResponse Time: '),
