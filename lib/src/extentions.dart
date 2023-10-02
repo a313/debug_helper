@@ -18,6 +18,10 @@ extension DateExtension on DateTime {
 }
 
 String formatListOrMap(dynamic data) {
-  const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-  return encoder.convert(data);
+  try {
+    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+    return encoder.convert(data);
+  } catch (e) {
+    return e.toString();
+  }
 }
