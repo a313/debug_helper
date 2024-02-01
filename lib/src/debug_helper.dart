@@ -82,7 +82,7 @@ class DebugHelper {
   }
 
   /// This constructor automatically calls [startListening] and starts detection and callbacks.
-  void autoStart(Function onPhoneShake) {
+  static void autoStart(Function onPhoneShake) {
     accelerometerEventStream().listen(
       (event) {
         double x = event.x;
@@ -99,19 +99,19 @@ class DebugHelper {
         if (gForce > 2.7) {
           var now = DateTime.now().millisecondsSinceEpoch;
           // ignore shake events too close to each other (500ms)
-          if (mShakeTimestamp + 500 > now) {
+          if (_instance!.mShakeTimestamp + 500 > now) {
             return;
           }
 
           // reset the shake count after 3 seconds of no shakes
-          if (mShakeTimestamp + 3000 < now) {
-            mShakeCount = 0;
+          if (_instance!.mShakeTimestamp + 3000 < now) {
+            _instance!.mShakeCount = 0;
           }
 
-          mShakeTimestamp = now;
-          mShakeCount++;
+          _instance!.mShakeTimestamp = now;
+          _instance!.mShakeCount++;
 
-          if (mShakeCount >= 1) {
+          if (_instance!.mShakeCount >= 1) {
             onPhoneShake();
           }
         }
